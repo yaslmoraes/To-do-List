@@ -43,6 +43,15 @@ app.post('/tasks', async (req, res) => {
   const newTask = new Task({ text: req.body.text });
   await newTask.save();
   res.json(newTask);
+
+  newTask.save()
+    .then(task => {
+        console.log('Tarefa salva:', task);
+        console.log('ID da tarefa:', task._id);  // O MongoDB gerou automaticamente o _id
+    })
+    .catch(error => {
+        console.error('Erro ao salvar a tarefa:', error);
+    });
 });
 
 // Rota para atualizar a tarefa
@@ -56,3 +65,4 @@ app.patch('/tasks/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
